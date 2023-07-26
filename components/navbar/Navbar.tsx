@@ -1,20 +1,16 @@
-import { Link } from "@mui/material";
+import Link from "next/link";
 import Logo from "../logo/Logo";
 import style from "./navbar.module.css";
-import Button from "@mui/material/Button";
-import RoundedButton from "../utilities/buttons/roundedButton/roundedButton";
 
 const Navbar = () => {
   return ( 
     <div className={style.navbar}>
       <div className={style.left}>
-        <Logo />
+        <Link href="/"><Logo /></Link>
       </div>
-      <ul className={style.middle}>
+      <ul className={style.right}>
+        <li><Link href="login" className={style.navbarLink}>Login</Link></li>
       </ul>
-      <div className={style.right}>
-        Login
-      </div>
     </div>
    );
 }

@@ -15,3 +15,8 @@
   justify-content: space-between;
   font-weight: 600;
 }
+
+.navbarLink {
+  text-decoration: none;
+  font-weight: 700;  
+}
