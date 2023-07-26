@@ -1,0 +1,24 @@
+.index {
+  display: grid;
+  place-items: center;
+}
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 64px;
+  gap: 3rem;
+  width: 80%;
+  height: 80vh;
+}
+
+.hero h1 {
+  text-align: center;
+}
+
+.bouncingIcon {
+  color: var(--primary);
+  height: 56px;
+}

@@ -1,0 +1,17 @@
+.roundedButton {
+  padding: 8px 16px;
+  background-color: var(--primary);
+  border-radius: 80px;
+  transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.text {
+  color: var(--white);
+  size: 10px;
+}
+
+.roundedButton:hover {
+  cursor: pointer;
+  transform: scale(1.05, 1.05);
+  background-color: var(--secondary);
+}
