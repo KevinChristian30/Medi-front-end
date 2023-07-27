@@ -7,8 +7,9 @@ import { auth } from "../../../firebase/firebaseConfig";
 import { useEffect } from "react";
 import loginImage from "../../../public/login-image.jpg";
 import Image from "next/image";
-import { Button, TextField } from "@mui/material";
+import { Button, TextField, Typography } from "@mui/material";
 import GoogleIcon from '@mui/icons-material/Google';
+import Link from "next/link";
 
 const LoginModal = () => {
   const [user, setUser] = useAuthState(auth);
@@ -68,6 +69,9 @@ const LoginModal = () => {
             >
             Login with Google
           </Button>
+        </div>
+        <div className={style.registerContainer}>
+          Don't have an account? Register <Link href="/register" className={style.registerLink}>here</Link>
         </div>
       </div>
     </div>
