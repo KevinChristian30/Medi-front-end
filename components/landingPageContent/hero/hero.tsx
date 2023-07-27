@@ -1,7 +1,7 @@
 import style from "./hero.module.css";
-import RoundedButton from "../../utilities/buttons/roundedButton/roundedButton";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faNotesMedical } from "@fortawesome/free-solid-svg-icons";
+import { Button } from "@mui/material";
 
 const Hero = () => {
   return ( 
@@ -9,7 +9,12 @@ const Hero = () => {
       <div className={style.hero}>
           <FontAwesomeIcon icon={faNotesMedical} className={style.bouncingIcon} />
           <h1>Your At Home Health Analysis, Powered by Artificial Intelligence.</h1>
-          <RoundedButton>Try HealthScanAI</RoundedButton>
+          <Button
+            variant="contained"
+            autoCapitalize="false"
+          >
+            Try HealthScanAI
+          </Button>
       </div>
     </div>
    );

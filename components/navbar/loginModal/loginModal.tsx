@@ -5,10 +5,10 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "../../../firebase/firebaseConfig";
 import { useEffect } from "react";
-import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 import loginImage from "../../../public/login-image.jpg";
 import Image from "next/image";
 import { Button, TextField } from "@mui/material";
+import GoogleIcon from '@mui/icons-material/Google';
 
 const LoginModal = () => {
   const [user, setUser] = useAuthState(auth);
@@ -40,33 +40,34 @@ const LoginModal = () => {
       <div className={style.right}>
         <div className={style.top}>
           <FontAwesomeIcon icon={faNotesMedical} size="2xl"/>
-          <h1 className={style.logInText}>Log In</h1>
+          <h1 className={style.logInText}>Login</h1>
         </div>
         <div className={style.bottom}>
-          <Button
-            variant="outlined"
-            onClick={loginWithGoogle}
-            startIcon={<FontAwesomeIcon icon={faGoogle}/>}
+          <TextField 
+            label="Email"
+            size="small"
+            fullWidth
+          />
+          <TextField 
+            label="Password"
+            size="small"
+            type="password"
+            fullWidth
+          />
+          <Button 
+            variant="outlined" 
+            onClick={loginWithEmailAndPassword}
             fullWidth>
+            Login 
+          </Button>
+          <Button
+            variant="contained"
+            onClick={loginWithGoogle}
+            startIcon={<GoogleIcon sx={{fill: "#fff"}} />}
+            fullWidth
+            >
             Login with Google
           </Button>
-          <p>Or</p>
-          <div className={style.loginFormContainer}>
-            <TextField 
-              label="Email"
-              size="small"
-            />
-            <TextField 
-              label="Password"
-              size="small"
-            />
-            <Button 
-              variant="contained" 
-              onClick={loginWithEmailAndPassword}
-              fullWidth>
-              Login 
-            </Button>
-          </div>
         </div>
       </div>
     </div>
