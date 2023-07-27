@@ -9,10 +9,7 @@ const Hero = () => {
       <div className={style.hero}>
           <FontAwesomeIcon icon={faNotesMedical} className={style.bouncingIcon} />
           <h1>Your At Home Health Analysis, Powered by Artificial Intelligence.</h1>
-          <Button
-            variant="contained"
-            autoCapitalize="false"
-          >
+          <Button variant="contained">
             Try Now
           </Button>
       </div>

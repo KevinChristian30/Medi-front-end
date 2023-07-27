@@ -8,7 +8,8 @@ const Home: NextPage = () => {
   return (
     <>
       <Head>
-        <title>MedBotAI</title>
+        <title>MedBotAI | Home</title>
+        <link rel="icon" href="/logo.svg" />
       </Head>
       <main>
         <Navbar />

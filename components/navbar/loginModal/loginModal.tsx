@@ -13,6 +13,7 @@ import Link from "next/link";
 import { useState } from "react";
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
+import Logo from "../../logo/logo";
 
 const LoginModal = () => {
   const [user, setUser] = useAuthState(auth);
@@ -49,10 +50,10 @@ const LoginModal = () => {
       <div className={style.left}>
         <Image src={loginImage} alt="Happy and Healthy" className={style.image}></Image>
         <div className={style.filter}></div>
+        <FontAwesomeIcon icon={faNotesMedical} className={style.logo} size="2xl"/>
       </div>
       <div className={style.right}>
         <div className={style.top}>
-          <FontAwesomeIcon icon={faNotesMedical} size="2xl"/>
           <h1 className={style.logInText}>Login</h1>
         </div>
         <div className={style.bottom}>

@@ -1,0 +1,50 @@
+.index {
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  place-items: center;
+}
+
+.backgroundImage {
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  position: absolute;
+  z-index: -1;
+}
+
+.filter {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  background-color: var(--primary);
+  opacity: 0.9;
+  z-index: 0;
+}
+
+.content {
+  width: 400px;
+  height: 400px;
+  background-color: var(--white);
+  border-radius: 3px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  z-index: 1;
+}
+
+.top {
+  display: grid;
+  place-items: center;
+}
+
+.loginLink {
+  color: var(--primary);
+}
+
+.middle {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}

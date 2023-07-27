@@ -16,10 +16,17 @@
   position: relative;
 }
 
-.left .image{
+.left .image {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.left .logo {
+  color: var(--white);
+  position: absolute;
+  top: 16px;
+  left: 16px;
 }
 
 .filter {
