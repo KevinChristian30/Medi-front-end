@@ -1,0 +1,58 @@
+.loginModal {
+  width: 800px;
+  height: 400px;
+  background-color: var(--white);
+  border-radius: 3px;
+  display: flex;
+}
+
+.left,
+.right {
+  width: 50%;
+}
+
+.left {
+  position: relative;
+}
+
+.left .image{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.filter {
+  background-color: var(--primary);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  inset: 0 0;
+  opacity: 0.7;
+}
+
+.right {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 0;
+}
+
+.top {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.logInText {
+  color: black;
+}
+
+.bottom {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 0 32px;
+}

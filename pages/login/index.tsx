@@ -1,5 +1,4 @@
 import { NextPage } from "next";
-import Navbar from "../../components/navbar/Navbar";
 import style from "./index.module.css";
 import { Button } from "@mui/material";
 import { auth } from "../../firebase/firebaseConfig";
@@ -15,7 +14,7 @@ const Login: NextPage = () => {
   const login = async () => {
     const result = await signInWithPopup(auth, googleAuth);
 
-
+    console.log(result);
   };
 
   useEffect(() => {
@@ -24,10 +23,9 @@ const Login: NextPage = () => {
 
   return ( 
     <>
-      <Navbar />
       <div className={style.loginPageContent}>
         <Button variant="contained" onClick={() => auth.signOut()}>Log out</Button>
-        <Button variant="contained" onClick={login}>Login</Button>
+        <Button variant="contained" onClick={login}>Log In</Button>
         {
           user && "Welcome, " + user.displayName
         }

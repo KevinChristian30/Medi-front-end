@@ -16,7 +16,18 @@
   font-weight: 600;
 }
 
-.navbarLink {
-  text-decoration: none;
+.loginButton {
   font-weight: 700;  
+}
+
+.loginButton:hover {
+  cursor: pointer;
+}
+
+.modalContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
 }
