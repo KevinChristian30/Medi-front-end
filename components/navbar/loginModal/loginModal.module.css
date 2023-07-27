@@ -4,6 +4,7 @@
   background-color: var(--white);
   border-radius: 3px;
   display: flex;
+  color: var(--primary);
 }
 
 .left,
@@ -61,4 +62,10 @@
   font-weight: 600;
   font-size: 0.8rem;
   color: var(--black);
+}
+
+.registerLink {
+  font-weight: 700;
+  color: var(--primary);
+  text-decoration: underline;
 }

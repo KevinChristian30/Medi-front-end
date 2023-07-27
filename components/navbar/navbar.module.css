@@ -18,6 +18,7 @@
 
 .loginButton {
   font-weight: 700;  
+  color: var(--primary);
 }
 
 .loginButton:hover {

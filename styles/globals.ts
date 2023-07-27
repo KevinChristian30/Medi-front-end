@@ -15,7 +15,7 @@ export const Theme: Theme = {
   secondary: "#EA907A",
   secondaryVariant: "#ffb703",
   tertiary: "#FBC687",
-  white: "white",
-  black: "black",
+  white: "#ffffff",
+  black: "#000000",
   lightgray: "lightgray"
 }

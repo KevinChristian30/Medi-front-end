@@ -7,30 +7,42 @@ import { auth } from "../../../firebase/firebaseConfig";
 import { useEffect } from "react";
 import loginImage from "../../../public/login-image.jpg";
 import Image from "next/image";
-import { Button, TextField, Typography } from "@mui/material";
+import { Button, TextField } from "@mui/material";
 import GoogleIcon from '@mui/icons-material/Google';
 import Link from "next/link";
+import { useState } from "react";
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 
 const LoginModal = () => {
   const [user, setUser] = useAuthState(auth);
+  const [successSnackbarOpen, setSuccessSnackbarOpen] = useState<boolean>(false);
+  const [errorSnackbarOpen, setErrorSnackbarOpen] = useState<boolean>(false);
 
   const googleAuth: GoogleAuthProvider = new GoogleAuthProvider();
 
   const loginWithGoogle = async () => {
     try {
       const result = await signInWithPopup(auth, googleAuth);
-    } catch {
-
+      
+      result ? openSuccessSnackbar() : openErrorSnackbar();
+    } catch (exception) {
+      openErrorSnackbar();
     }
   };
 
   const loginWithEmailAndPassword = async() => {
-    
   }
 
   useEffect(() => {
-    console.log(user);
+    
   }, [user]);
+
+  const openSuccessSnackbar = () => setSuccessSnackbarOpen(true);
+  const closeSuccessSnackbar = () => setSuccessSnackbarOpen(false);
+
+  const openErrorSnackbar = () => setErrorSnackbarOpen(true);
+  const closeErrorSnackbar = () => setErrorSnackbarOpen(false);
 
   return ( 
     <div className={style.loginModal}>
@@ -71,9 +83,34 @@ const LoginModal = () => {
           </Button>
         </div>
         <div className={style.registerContainer}>
-          Don't have an account? Register <Link href="/register">here</Link>
+          Don't have an account? Register <Link href="/register" className={style.registerLink}>here</Link>
         </div>
       </div>
+
+      <Snackbar
+        open={successSnackbarOpen}
+        autoHideDuration={5000}
+        onClose={closeSuccessSnackbar}
+        anchorOrigin={{vertical: 'top', horizontal: 'center'}}>
+          <Alert 
+            variant="standard"
+            onClose={closeSuccessSnackbar} 
+            severity="success" sx={{}}>
+              Welcome, {user?.displayName}!
+          </Alert>
+      </Snackbar>
+      <Snackbar
+        open={errorSnackbarOpen}
+        autoHideDuration={5000}
+        onClose={closeErrorSnackbar}
+        anchorOrigin={{vertical: 'top', horizontal: 'center'}}>
+          <Alert 
+            variant="standard"
+            onClose={closeErrorSnackbar} 
+            severity="error">
+              Login failed, please try again!
+          </Alert>
+      </Snackbar>
     </div>
    );
 }

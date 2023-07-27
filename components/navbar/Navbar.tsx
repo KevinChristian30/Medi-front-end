@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Logo from "../logo/Logo";
+import Logo from "../logo/logo";
 import style from "./navbar.module.css";
 import { useState } from "react";
 import { Modal } from "@mui/material";

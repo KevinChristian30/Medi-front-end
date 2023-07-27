@@ -1,10 +1,10 @@
-import { ThemeProvider, createTheme } from '@mui/material'
+import { ThemeProvider, createTheme, ThemeOptions } from '@mui/material'
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
 import { Theme } from '../styles/globals';
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const theme = createTheme({
+  const theme: ThemeOptions = createTheme({
     palette: {
       primary: {
         main: Theme.primary

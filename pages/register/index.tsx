@@ -1,3 +1,4 @@
+import { Alert } from "@mui/material";
 import { NextPage } from "next";
 
 const Register: NextPage = () => {

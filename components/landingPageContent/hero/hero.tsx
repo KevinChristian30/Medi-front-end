@@ -13,7 +13,7 @@ const Hero = () => {
             variant="contained"
             autoCapitalize="false"
           >
-            Try HealthScanAI
+            Try Now
           </Button>
       </div>
     </div>
