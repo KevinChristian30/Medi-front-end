@@ -71,7 +71,7 @@ const LoginModal = () => {
           </Button>
         </div>
         <div className={style.registerContainer}>
-          Don't have an account? Register <Link href="/register" className={style.registerLink}>here</Link>
+          Don't have an account? Register <Link href="/register">here</Link>
         </div>
       </div>
     </div>
