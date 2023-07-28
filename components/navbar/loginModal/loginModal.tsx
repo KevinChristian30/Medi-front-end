@@ -2,7 +2,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import style from "./loginModal.module.css";
 import { faNotesMedical } from "@fortawesome/free-solid-svg-icons";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { GoogleAuthProvider, UserCredential, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { 
+  GoogleAuthProvider, 
+  UserCredential, 
+  signInWithEmailAndPassword, 
+  signInWithPopup 
+} from "firebase/auth";
 import { auth } from "../../../firebase/firebaseConfig";
 import { useEffect } from "react";
 import loginImage from "../../../public/login-image.jpg";
@@ -71,7 +76,6 @@ const LoginModal = () => {
         await signInWithEmailAndPassword(auth, formValues.email, formValues.password);
 
       userCredential ? setSuccessSnackbarOpen(true) : setErrorSnackbarOpen(true);
-
     } catch (e) {
       setErrorSnackbarOpen(true);
     }
@@ -98,7 +102,7 @@ const LoginModal = () => {
           <div className={style.top}>
             <h1 className={style.logInText}>Login</h1>
           </div>
-          <div className={style.bottom}>
+          <form className={style.bottom} onSubmit={loginWithEmailAndPassword}>
             <TextField 
               label="Email"
               size="small"
@@ -115,6 +119,7 @@ const LoginModal = () => {
               onChange={(e) => setFormValues({...formValues, password: e.target.value})}
             />
             <LoadingButton 
+              type="submit"
               variant="outlined" 
               onClick={loginWithEmailAndPassword}
               fullWidth
@@ -124,6 +129,7 @@ const LoginModal = () => {
               Login 
             </LoadingButton>
             <LoadingButton
+              type="button"
               variant="contained"
               onClick={loginWithGoogle}
               startIcon={!isLoading && <GoogleIcon sx={{fill: "#fff"}} />}
@@ -132,7 +138,7 @@ const LoginModal = () => {
               disabled={isLoading.emailAndPasswordLogin}>
               Login with Google
             </LoadingButton>
-          </div>
+          </form>
           <div className={style.registerContainer}>
             Don't have an account? Register <Link href="/register" className={style.registerLink}>here</Link>
           </div>
