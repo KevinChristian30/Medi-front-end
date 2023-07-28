@@ -18,33 +18,63 @@
   height: 100vh;
   position: absolute;
   background-color: var(--primary);
-  opacity: 0.9;
+  opacity: 0.7;
   z-index: 0;
 }
 
 .content {
-  width: 400px;
+  width: 800px;
   height: 400px;
+  display: flex;
+  z-index: 1;
   background-color: var(--white);
   border-radius: 3px;
+}
+
+.left,
+.right {
+  width: 50%;
   padding: 16px;
+}
+
+.left {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.left p {
+  text-align: center;
+}
+
+.illustration {
+  width: 75%;
+  height: 75%;
+}
+
+.right {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  z-index: 1;
 }
 
-.top {
+.right .top {
   display: grid;
   place-items: center;
 }
 
-.loginLink {
+.right .loginLink {
   color: var(--primary);
 }
 
-.middle {
+.right .middle {
   display: flex;
   flex-direction: column;
   gap: 16px;
+}
+
+.right .bottom {
+  display: flex;
+  justify-content: flex-end;
 }

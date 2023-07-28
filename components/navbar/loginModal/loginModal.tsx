@@ -13,7 +13,6 @@ import Link from "next/link";
 import { useState } from "react";
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
-import Logo from "../../logo/logo";
 
 const LoginModal = () => {
   const [user, setUser] = useAuthState(auth);
@@ -46,45 +45,47 @@ const LoginModal = () => {
   const closeErrorSnackbar = () => setErrorSnackbarOpen(false);
 
   return ( 
-    <div className={style.loginModal}>
-      <div className={style.left}>
-        <Image src={loginImage} alt="Happy and Healthy" className={style.image}></Image>
-        <div className={style.filter}></div>
-        <FontAwesomeIcon icon={faNotesMedical} className={style.logo} size="2xl"/>
-      </div>
-      <div className={style.right}>
-        <div className={style.top}>
-          <h1 className={style.logInText}>Login</h1>
+    <>
+      <div className={style.loginModal}>
+        <div className={style.left}>
+          <Image src={loginImage} alt="Happy and Healthy" className={style.image}></Image>
+          <div className={style.filter}></div>
+          <FontAwesomeIcon icon={faNotesMedical} className={style.logo} size="2xl"/>
         </div>
-        <div className={style.bottom}>
-          <TextField 
-            label="Email"
-            size="small"
-            fullWidth
-          />
-          <TextField 
-            label="Password"
-            size="small"
-            type="password"
-            fullWidth
-          />
-          <Button 
-            variant="outlined" 
-            onClick={loginWithEmailAndPassword}
-            fullWidth>
-            Login 
-          </Button>
-          <Button
-            variant="contained"
-            onClick={loginWithGoogle}
-            startIcon={<GoogleIcon sx={{fill: "#fff"}} />}
-            fullWidth
-            >
-            Login with Google
-          </Button>
-        </div>
-        <div className={style.registerContainer}>
-          Don't have an account? Register <Link href="/register" className={style.registerLink}>here</Link>
+        <div className={style.right}>
+          <div className={style.top}>
+            <h1 className={style.logInText}>Login</h1>
+          </div>
+          <div className={style.bottom}>
+            <TextField 
+              label="Email"
+              size="small"
+              fullWidth
+            />
+            <TextField 
+              label="Password"
+              size="small"
+              type="password"
+              fullWidth
+            />
+            <Button 
+              variant="outlined" 
+              onClick={loginWithEmailAndPassword}
+              fullWidth>
+              Login 
+            </Button>
+            <Button
+              variant="contained"
+              onClick={loginWithGoogle}
+              startIcon={<GoogleIcon sx={{fill: "#fff"}} />}
+              fullWidth
+              >
+              Login with Google
+            </Button>
+          </div>
+          <div className={style.registerContainer}>
+            Don't have an account? Register <Link href="/register" className={style.registerLink}>here</Link>
+          </div>
         </div>
       </div>
 
@@ -112,7 +113,7 @@ const LoginModal = () => {
               Login failed, please try again!
           </Alert>
       </Snackbar>
-    </div>
+    </>
    );
 }
  
