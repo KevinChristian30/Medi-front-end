@@ -167,7 +167,7 @@ const Register: NextPage = () => {
   return ( 
     <>
       <Head>
-        <title>MedBotAI | Register</title>
+        <title>Medi | Register</title>
         <link rel="icon" href="/logo.svg" />
       </Head>
       <main className={style.index}>

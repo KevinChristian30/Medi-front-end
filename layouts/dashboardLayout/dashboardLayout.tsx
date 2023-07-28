@@ -15,7 +15,9 @@ const DashboardLayout = (props: Props) => {
       <Sidebar />
       <div className={style.container}>
         <Navbar />
-        {children}
+        <div className={style.content}>
+          {children}
+        </div>
       </div>
     </div>
    );

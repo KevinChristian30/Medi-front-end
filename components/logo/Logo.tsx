@@ -6,7 +6,7 @@ const Logo = () => {
   return ( 
     <div className={style.logo}>
       <FontAwesomeIcon icon={faNotesMedical} size="xl" className={style.bouncingIcon} />
-      <h3>MedBotAI</h3>
+      <h3>Medi</h3>
     </div>
    );
 }

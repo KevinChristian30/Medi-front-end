@@ -23,7 +23,7 @@ const Home: NextPage = () => {
   return (
     <>
       <Head>
-        <title>MedBotAI | Home</title>
+        <title>Medi | Home</title>
         <link rel="icon" href="/logo.svg" />
       </Head>
       <main>

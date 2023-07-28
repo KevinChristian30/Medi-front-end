@@ -6,7 +6,7 @@ const Dashboard = () => {
   return ( 
     <>
       <Head>
-        <title>MedbotAI | Dashboard</title>
+        <title>Medi | Dashboard</title>
       </Head>
       <main>
         <DashboardLayout>
