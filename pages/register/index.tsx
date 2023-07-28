@@ -11,12 +11,12 @@ import Error from "../../types/error";
 import { 
   UserCredential, 
   createUserWithEmailAndPassword, 
-  fetchSignInMethodsForEmail, 
-  sendEmailVerification 
+  fetchSignInMethodsForEmail
 } from "firebase/auth";
 import { auth } from "../../firebase/firebaseConfig";
 import { LoadingButton } from "@mui/lab";
 import Toast from "../../components/utilities/toast/toast";
+import { useRouter } from "next/router";
 
 interface FormValues {
   email: string;
@@ -50,6 +50,8 @@ const Register: NextPage = () => {
   const [errorSnackbarOpen, setErrorSnackbarOpen] = useState<boolean>(false);
 
   const [errorMessage, setErrorMessage] = useState<string>('');
+
+  const router = useRouter();
 
   const areFormValuesValid = () : boolean => {
     let newFormError: FormErrors = {
@@ -154,12 +156,11 @@ const Register: NextPage = () => {
       }
 
       setSuccessSnackbarOpen(true);
+      router.push('/');
     } catch (e) {
       openErrorSnackbar("Something went wrong, please try again!");
     }
   
-    // await sendEmailVerification(newUserCredential.user);
-
     setIsLoading(false);
   }
 

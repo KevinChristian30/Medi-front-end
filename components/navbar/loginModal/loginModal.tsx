@@ -132,7 +132,7 @@ const LoginModal = () => {
               type="button"
               variant="contained"
               onClick={loginWithGoogle}
-              startIcon={!isLoading && <GoogleIcon sx={{fill: "#fff"}} />}
+              startIcon={isLoading && <GoogleIcon sx={{fill: "#fff"}} />}
               fullWidth
               loading={isLoading.googleLogin}
               disabled={isLoading.emailAndPasswordLogin}>

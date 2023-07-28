@@ -16,6 +16,9 @@ const Navbar = () => {
         <div className={style.left}>
           <Link href="/"><Logo /></Link>
         </div>
+        <ul className={style.middle}>
+          <li></li>
+        </ul>
         <ul className={style.right}>
           <li>
             <div className={style.loginButton} onClick={handleOpenModal}>Login</div>

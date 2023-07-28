@@ -10,7 +10,7 @@ const Hero = () => {
           <FontAwesomeIcon icon={faNotesMedical} className={style.bouncingIcon} />
           <h1>Your At Home Health Analysis, Powered by Artificial Intelligence.</h1>
           <Button variant="contained">
-            Try Now
+            Explore
           </Button>
       </div>
     </div>
