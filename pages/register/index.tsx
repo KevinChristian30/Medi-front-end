@@ -3,12 +3,20 @@ import Head from "next/head";
 import style from "./index.module.css";
 import Link from "next/link";
 import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
 import Image from "next/image";
 import registerBackgroundImage from "/public/register-image.jpg"
 import registerIllustration from "/public/register-illustration.svg"
 import { useState } from "react";
 import Error from "../../types/error";
+import { 
+  UserCredential, 
+  createUserWithEmailAndPassword, 
+  fetchSignInMethodsForEmail, 
+  sendEmailVerification 
+} from "firebase/auth";
+import { auth } from "../../firebase/firebaseConfig";
+import { LoadingButton } from "@mui/lab";
+import Toast from "../../components/utilities/toast/toast";
 
 interface FormValues {
   email: string;
@@ -36,6 +44,12 @@ const Register: NextPage = () => {
       message: ''
     }
   });
+
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [successSnackbarOpen, setSuccessSnackbarOpen] = useState<boolean>(false);
+  const [errorSnackbarOpen, setErrorSnackbarOpen] = useState<boolean>(false);
+
+  const [errorMessage, setErrorMessage] = useState<string>('');
 
   const areFormValuesValid = () : boolean => {
     let newFormError: FormErrors = {
@@ -105,12 +119,48 @@ const Register: NextPage = () => {
     return isValidEmail && isValidPassword;
   }
 
+  const isEmailUnique = async () : Promise<boolean> => {
+    const methods: string[] = await fetchSignInMethodsForEmail(auth, formValues.email);
+
+    return methods.length == 0;
+  }
+
+  const openErrorSnackbar = (message: string) : void => {
+    setErrorMessage(message);
+    setErrorSnackbarOpen(true);
+  }
+
   const register = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (areFormValuesValid()) {
-      // Send Request 
+    if (!areFormValuesValid()) return;
+
+    setIsLoading(true);
+    
+    try {
+      const emailUnique: boolean = await isEmailUnique();
+      if (!emailUnique) {
+        openErrorSnackbar("Email is already taken!");
+        setIsLoading(false);
+        return;
+      }
+
+      const newUserCredential: UserCredential = 
+        await createUserWithEmailAndPassword(auth, formValues.email, formValues.password);
+      if (!newUserCredential) {
+        openErrorSnackbar("Something went wrong, please try again!");
+        setIsLoading(false);
+        return;
+      }
+
+      setSuccessSnackbarOpen(true);
+    } catch (e) {
+      openErrorSnackbar("Something went wrong, please try again!");
     }
+  
+    // await sendEmailVerification(newUserCredential.user);
+
+    setIsLoading(false);
   }
 
   return ( 
@@ -167,12 +217,14 @@ const Register: NextPage = () => {
                   height: '56px'
                 }}
               />
-              <Button 
+              <LoadingButton 
                 type="submit"
                 variant="contained" 
-                fullWidth>
+                fullWidth
+                loading={isLoading}
+                >
                 Register for Free
-              </Button>
+              </LoadingButton>
             </form>
             <div className={style.bottom}>
               <Link href='/' className={style.loginLink}>
@@ -182,6 +234,17 @@ const Register: NextPage = () => {
           </div>
         </div>
       </main>
+      <Toast 
+        isOpen={successSnackbarOpen}
+        closeToast={() => setSuccessSnackbarOpen(false)}
+        message="Account registered successfully!"
+      />
+      <Toast 
+        isOpen={errorSnackbarOpen}
+        closeToast={() => setErrorSnackbarOpen(false)}
+        message={errorMessage}
+        severity="error"
+      />
     </>
    );
 }

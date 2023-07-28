@@ -2,47 +2,89 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import style from "./loginModal.module.css";
 import { faNotesMedical } from "@fortawesome/free-solid-svg-icons";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { GoogleAuthProvider, UserCredential, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { auth } from "../../../firebase/firebaseConfig";
 import { useEffect } from "react";
 import loginImage from "../../../public/login-image.jpg";
 import Image from "next/image";
-import { Button, TextField } from "@mui/material";
+import { TextField } from "@mui/material";
 import GoogleIcon from '@mui/icons-material/Google';
 import Link from "next/link";
 import { useState } from "react";
-import Snackbar from '@mui/material/Snackbar';
-import Alert from '@mui/material/Alert';
+import LoadingButton from "@mui/lab/LoadingButton";
+import Toast from "../../utilities/toast/toast";
+
+interface IsLoading {
+  googleLogin: boolean;
+  emailAndPasswordLogin: boolean;
+}
+
+interface FormValues {
+  email: string;
+  password: string;
+}
 
 const LoginModal = () => {
   const [user, setUser] = useAuthState(auth);
   const [successSnackbarOpen, setSuccessSnackbarOpen] = useState<boolean>(false);
   const [errorSnackbarOpen, setErrorSnackbarOpen] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<IsLoading>({
+    googleLogin: false,
+    emailAndPasswordLogin: false
+  });
+
+  const [formValues, setFormValues] = useState<FormValues>({
+    email: '',
+    password: ''
+  });
 
   const googleAuth: GoogleAuthProvider = new GoogleAuthProvider();
 
   const loginWithGoogle = async () => {
     try {
+      setIsLoading({
+        ...isLoading,
+        googleLogin: true
+      });
+
       const result = await signInWithPopup(auth, googleAuth);
       
-      result ? openSuccessSnackbar() : openErrorSnackbar();
+      result ? setSuccessSnackbarOpen(true) : setSuccessSnackbarOpen(false);
     } catch (exception) {
-      openErrorSnackbar();
+      setErrorSnackbarOpen(true);
     }
+
+    setIsLoading({
+      ...isLoading,
+      googleLogin: false
+    });
   };
 
   const loginWithEmailAndPassword = async() => {
+    setIsLoading({
+      ...isLoading,
+      emailAndPasswordLogin: true
+    });
+
+    try {
+      const userCredential: UserCredential = 
+        await signInWithEmailAndPassword(auth, formValues.email, formValues.password);
+
+      userCredential ? setSuccessSnackbarOpen(true) : setErrorSnackbarOpen(true);
+
+    } catch (e) {
+      setErrorSnackbarOpen(true);
+    }
+
+    setIsLoading({
+      ...isLoading,
+      emailAndPasswordLogin: false
+    });
   }
 
   useEffect(() => {
-    
+    console.log(user);
   }, [user]);
-
-  const openSuccessSnackbar = () => setSuccessSnackbarOpen(true);
-  const closeSuccessSnackbar = () => setSuccessSnackbarOpen(false);
-
-  const openErrorSnackbar = () => setErrorSnackbarOpen(true);
-  const closeErrorSnackbar = () => setErrorSnackbarOpen(false);
 
   return ( 
     <>
@@ -61,27 +103,35 @@ const LoginModal = () => {
               label="Email"
               size="small"
               fullWidth
+              value={formValues.email}
+              onChange={(e) => setFormValues({...formValues, email: e.target.value})}
             />
             <TextField 
               label="Password"
               size="small"
               type="password"
               fullWidth
+              value={formValues.password}
+              onChange={(e) => setFormValues({...formValues, password: e.target.value})}
             />
-            <Button 
+            <LoadingButton 
               variant="outlined" 
               onClick={loginWithEmailAndPassword}
-              fullWidth>
+              fullWidth
+              loading={isLoading.emailAndPasswordLogin}
+              disabled={isLoading.googleLogin}
+              >
               Login 
-            </Button>
-            <Button
+            </LoadingButton>
+            <LoadingButton
               variant="contained"
               onClick={loginWithGoogle}
-              startIcon={<GoogleIcon sx={{fill: "#fff"}} />}
+              startIcon={!isLoading && <GoogleIcon sx={{fill: "#fff"}} />}
               fullWidth
-              >
+              loading={isLoading.googleLogin}
+              disabled={isLoading.emailAndPasswordLogin}>
               Login with Google
-            </Button>
+            </LoadingButton>
           </div>
           <div className={style.registerContainer}>
             Don't have an account? Register <Link href="/register" className={style.registerLink}>here</Link>
@@ -89,30 +139,17 @@ const LoginModal = () => {
         </div>
       </div>
 
-      <Snackbar
-        open={successSnackbarOpen}
-        autoHideDuration={5000}
-        onClose={closeSuccessSnackbar}
-        anchorOrigin={{vertical: 'top', horizontal: 'center'}}>
-          <Alert 
-            variant="standard"
-            onClose={closeSuccessSnackbar} 
-            severity="success" sx={{}}>
-              Welcome, {user?.displayName}!
-          </Alert>
-      </Snackbar>
-      <Snackbar
-        open={errorSnackbarOpen}
-        autoHideDuration={5000}
-        onClose={closeErrorSnackbar}
-        anchorOrigin={{vertical: 'top', horizontal: 'center'}}>
-          <Alert 
-            variant="standard"
-            onClose={closeErrorSnackbar} 
-            severity="error">
-              Login failed, please try again!
-          </Alert>
-      </Snackbar>
+      <Toast 
+        isOpen={successSnackbarOpen}
+        closeToast={() => setSuccessSnackbarOpen(false)}
+        message={`Welcome, ${user?.displayName ? user?.displayName : user?.email}!`}
+      />
+      <Toast 
+        isOpen={errorSnackbarOpen}
+        closeToast={() => setErrorSnackbarOpen(false)}
+        message='Login failed, please try again!'
+        severity="error"
+      />
     </>
    );
 }
