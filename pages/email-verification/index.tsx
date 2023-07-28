@@ -43,6 +43,7 @@ const EmailVerification = () => {
   }
 
   return ( 
+    user && !user?.emailVerified && 
     <>
       <Head>
         <title>Medi | Email Verification</title>
@@ -90,7 +91,7 @@ const EmailVerification = () => {
               onClick={sendEmail}
               loading={isLoading}
             >
-              Send Email  
+              { !emailSent ? 'Send Email' : 'Resend Email' }
             </LoadingButton>
           </div>
         </div>

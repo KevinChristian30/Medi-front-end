@@ -10,7 +10,6 @@ const UseAuth = () => {
   if (loading) return <LoadingScreen />;
 
   if (!user) router.push('/');
-
   if (!user?.emailVerified) router.push('/email-verification');
 
   return ( 

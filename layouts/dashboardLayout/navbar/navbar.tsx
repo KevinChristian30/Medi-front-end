@@ -3,8 +3,6 @@ import style from "./navbar.module.css";
 import { auth } from "../../../firebase/firebaseConfig";
 import LoadingScreen from "../../../components/loading/loadingScreen";
 import { useRouter } from "next/router";
-import Avatar from "@mui/material/Avatar";
-import { Theme } from "../../../styles/globals";
 
 const Navbar = () => {
   const [user, loading, error] = useAuthState(auth);

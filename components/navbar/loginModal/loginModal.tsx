@@ -56,7 +56,13 @@ const LoginModal = () => {
 
       const result = await signInWithPopup(auth, googleAuth);
       
-      result ? setSuccessSnackbarOpen(true) : setSuccessSnackbarOpen(false);
+      if (result) {
+        setSuccessSnackbarOpen(true);
+        
+        router.push('/dashboard');
+      } else {
+        setErrorSnackbarOpen(true);
+      }
     } catch (exception) {
       setErrorSnackbarOpen(true);
     }

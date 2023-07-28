@@ -11,11 +11,10 @@ import LoadingScreen from "../components/loading/loadingScreen"
 
 const Home: NextPage = () => {
   const [user, loading, error] = useAuthState(auth);
-
   const router = useRouter();
 
   useEffect(() => {
-    if (user) router.push('/dashboard');
+    if (user && user.emailVerified) router.push('/dashboard');
   }, [user]);
 
   if (loading) return <LoadingScreen />
