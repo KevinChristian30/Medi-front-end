@@ -17,6 +17,7 @@ import Link from "next/link";
 import { useState } from "react";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Toast from "../../utilities/toast/toast";
+import { useRouter } from "next/router";
 
 interface IsLoading {
   googleLogin: boolean;
@@ -41,6 +42,8 @@ const LoginModal = () => {
     email: '',
     password: ''
   });
+
+  const router = useRouter();
 
   const googleAuth: GoogleAuthProvider = new GoogleAuthProvider();
 
@@ -74,7 +77,13 @@ const LoginModal = () => {
       const userCredential: UserCredential = 
         await signInWithEmailAndPassword(auth, formValues.email, formValues.password);
 
-      userCredential ? setSuccessSnackbarOpen(true) : setErrorSnackbarOpen(true);
+      if (userCredential) {
+        setSuccessSnackbarOpen(true);
+        
+        router.push('/dashboard');
+      } else {
+        setErrorSnackbarOpen(true);
+      }
     } catch (e) {
       setErrorSnackbarOpen(true);
     }

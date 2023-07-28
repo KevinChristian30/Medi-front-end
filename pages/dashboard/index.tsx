@@ -1,10 +1,12 @@
 import Head from "next/head";
 import style from "./index.module.css";
 import DashboardLayout from "../../layouts/dashboardLayout/dashboardLayout";
+import UseAuth from "../../hooks/useAuth";
 
 const Dashboard = () => {
   return ( 
     <>
+      <UseAuth />
       <Head>
         <title>Medi | Dashboard</title>
       </Head>
