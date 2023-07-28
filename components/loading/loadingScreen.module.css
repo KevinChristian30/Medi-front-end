@@ -1,0 +1,25 @@
+.loadingScreen {
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--primary);
+  position: fixed;
+  display: grid;
+  place-items: center;
+  z-index: 999;
+  top: 0;
+  left: 0;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  font-weight: 700;
+  font-size: 32px;
+  color: var(--white);
+}
+
+.icon {
+  height: 100px;
+  color: var(--white);
+}

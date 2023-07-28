@@ -9,7 +9,6 @@ import {
   signInWithPopup 
 } from "firebase/auth";
 import { auth } from "../../../firebase/firebaseConfig";
-import { useEffect } from "react";
 import loginImage from "../../../public/login-image.jpg";
 import Image from "next/image";
 import { TextField } from "@mui/material";
@@ -30,7 +29,7 @@ interface FormValues {
 }
 
 const LoginModal = () => {
-  const [user, setUser] = useAuthState(auth);
+  const [user, loading, error] = useAuthState(auth);
   const [successSnackbarOpen, setSuccessSnackbarOpen] = useState<boolean>(false);
   const [errorSnackbarOpen, setErrorSnackbarOpen] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<IsLoading>({
@@ -85,10 +84,6 @@ const LoginModal = () => {
       emailAndPasswordLogin: false
     });
   }
-
-  useEffect(() => {
-    console.log(user);
-  }, [user]);
 
   return ( 
     <>
