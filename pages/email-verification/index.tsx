@@ -64,7 +64,7 @@ const EmailVerification = () => {
             !emailSent ?
             <div className={style.middle}>
               <p>
-                We will send an email to  
+                Click the button and we will send an email to  
                 <span> </span>
                 <span className={style.email}>
                   {user?.email}

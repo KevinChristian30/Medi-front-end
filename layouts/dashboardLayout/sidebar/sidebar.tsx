@@ -86,7 +86,7 @@ const Sidebar = () => {
                   </p>
                 </ListItemText>
               </ListItemButton>
-              <ListItemButton sx={{ pl: 4 }}>
+              <ListItemButton sx={{ pl: 4 }} onClick={() => navigateTo('reset-password')}>
                 <ListItemIcon>
                   <LockResetIcon className={style.icon} />
                 </ListItemIcon>
