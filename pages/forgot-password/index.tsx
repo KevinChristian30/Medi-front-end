@@ -7,8 +7,66 @@ import { TextField } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import SendIcon from '@mui/icons-material/Send';
 import Link from 'next/link';
+import { useState } from 'react';
+import Error from '../../types/error';
+import { useRouter } from 'next/router';
+
+interface FormValues {
+  email: string;
+}
+
+interface FormErrors {
+  email: Error;
+}
 
 const ForgotPassword = () => {
+  const [formValues, setFormValues] = useState<FormValues>({
+    email: ''
+  });
+
+  const [formErrors, setFormErrors] = useState<FormErrors>({
+    email: {
+      isError: false,
+      message: ''
+    }
+  });
+
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [successSnackbarOpen, setSuccessSnackbarOpen] = useState<boolean>(false);
+  const [errorSnackbarOpen, setErrorSnackbarOpen] = useState<boolean>(false);
+
+  const router = useRouter();
+
+  const areFormValuesValid = () : boolean => {
+    let newFormErrors: FormErrors = {
+      email: {
+        isError: false,
+        message: ''
+      },
+    };
+
+    const validateEmail = () : boolean => {
+      if (!formValues.email.includes('@')) {
+        newFormErrors.email.isError = true;
+        newFormErrors.email.message = 'Invalid Email Address';  
+      }
+
+      return false;
+    }
+
+    setFormErrors(newFormErrors);
+
+    return validateEmail();
+  }
+
+  const sendEmail = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (!areFormValuesValid()) return;
+
+    setIsLoading(true);
+  }
+
   return (
     <>
       <Head>
@@ -31,7 +89,7 @@ const ForgotPassword = () => {
             <div className={style.top}>
               <h2>Forgot Password</h2>
             </div>
-            <form className={style.middle}>
+            <form className={style.middle} onSubmit={sendEmail}>
               <TextField 
                 label="Email"
                 size="small"
@@ -42,6 +100,7 @@ const ForgotPassword = () => {
                 type='submit'
                 startIcon={<SendIcon />}
                 fullWidth
+                loading={isLoading}
               >
                 Send Email                
               </LoadingButton>

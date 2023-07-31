@@ -54,7 +54,7 @@ const Register: NextPage = () => {
   const router = useRouter();
 
   const areFormValuesValid = () : boolean => {
-    let newFormError: FormErrors = {
+    let newFormErrors: FormErrors = {
       email: {
         isError: false,
         message: ''
@@ -70,8 +70,8 @@ const Register: NextPage = () => {
       const isEmailValid: boolean = regExp.test(formValues.email);
 
       if (!isEmailValid) {
-        newFormError.email.isError = true;
-        newFormError.email.message = 'Invalid Email Address';        
+        newFormErrors.email.isError = true;
+        newFormErrors.email.message = 'Invalid Email Address';        
       }
 
       return isEmailValid;
@@ -84,29 +84,29 @@ const Register: NextPage = () => {
 
       let isPasswordValid: boolean = lowercaseLetterRegExp.test(formValues.password);
       if (!isPasswordValid) {
-        newFormError.password.isError = true;
-        newFormError.password.message = 'Password must contain lowercase letter';        
+        newFormErrors.password.isError = true;
+        newFormErrors.password.message = 'Password must contain lowercase letter';        
         return false;
       }
 
       isPasswordValid = uppercaseLetterRegExp.test(formValues.password);
       if (!isPasswordValid) {
-        newFormError.password.isError = true;
-        newFormError.password.message = 'Password must contain uppercase letter';      
+        newFormErrors.password.isError = true;
+        newFormErrors.password.message = 'Password must contain uppercase letter';      
         return false;  
       }
       
       isPasswordValid = numberRegExp.test(formValues.password);
       if (!isPasswordValid) {
-        newFormError.password.isError = true;
-        newFormError.password.message = 'Password must contain number';        
+        newFormErrors.password.isError = true;
+        newFormErrors.password.message = 'Password must contain number';        
         return false;
       }
 
       isPasswordValid = formValues.password.length >= 8;
       if (!isPasswordValid) {
-        newFormError.password.isError = true;
-        newFormError.password.message = 'Password must be at least 8 characters long';        
+        newFormErrors.password.isError = true;
+        newFormErrors.password.message = 'Password must be at least 8 characters long';        
         return false;
       }
 
@@ -116,7 +116,7 @@ const Register: NextPage = () => {
     const isValidEmail: boolean = validateEmail();
     const isValidPassword: boolean = validatePassword();
 
-    setFormErrors(newFormError);
+    setFormErrors(newFormErrors);
 
     return isValidEmail && isValidPassword;
   }
