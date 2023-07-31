@@ -58,7 +58,7 @@
   color: black;
 }
 
-.bottom {
+.middle {
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -67,10 +67,16 @@
   padding: 0 32px;
 }
 
-.registerContainer {
+.bottom {
   font-weight: 600;
   font-size: 0.8rem;
   color: var(--black);
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
 }
 
 .registerLink {

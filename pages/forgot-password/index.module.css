@@ -1,0 +1,67 @@
+.index {
+  display: grid;
+  place-items: center;
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--primary);
+}
+
+.content {
+  height: 400px;
+  width: 800px;
+  background-color: var(--white);
+  border-radius: 3px;
+  display: flex;
+}
+
+.left,
+.right {
+  width: 50%;
+}
+
+.left {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 16px;
+  height: 100%;
+}
+
+.forgotPasswordImage {
+  width: 70%;
+  height: fit-content;
+}
+
+.left p {
+  font-weight: 500;
+  text-align: center;
+  width: 70%;
+}
+
+.right {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px;
+}
+
+.middle {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.right .bottom {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  text-align: right;
+}
+
+.loginLink {
+  width: fit-content;
+  color: var(--primary);
+}

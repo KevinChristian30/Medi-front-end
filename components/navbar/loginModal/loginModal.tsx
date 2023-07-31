@@ -112,7 +112,7 @@ const LoginModal = () => {
           <div className={style.top}>
             <h1 className={style.logInText}>Login</h1>
           </div>
-          <form className={style.bottom} onSubmit={loginWithEmailAndPassword}>
+          <form className={style.middle} onSubmit={loginWithEmailAndPassword}>
             <TextField 
               label="Email"
               size="small"
@@ -149,8 +149,14 @@ const LoginModal = () => {
               Login with Google
             </LoadingButton>
           </form>
-          <div className={style.registerContainer}>
-            Don't have an account? Register <Link href="/register" className={style.registerLink}>here</Link>
+          <div className={style.bottom}>
+            <div>
+              Don't have an account? Register <span> </span>
+              <Link href="/register" className={style.registerLink}>
+                here
+              </Link>
+            </div>
+            <Link href="/forgot-password" className={style.registerLink}>Forgot Password?</Link>
           </div>
         </div>
       </div>
