@@ -164,7 +164,7 @@ const LoginModal = () => {
       <Toast 
         isOpen={successSnackbarOpen}
         closeToast={() => setSuccessSnackbarOpen(false)}
-        message={`Welcome, ${user?.displayName ? user?.displayName : user?.email}!`}
+        message={`Welcome, ${user?.displayName ? user?.displayName : user?.email}! Redirecting you...`}
       />
       <Toast 
         isOpen={errorSnackbarOpen}
