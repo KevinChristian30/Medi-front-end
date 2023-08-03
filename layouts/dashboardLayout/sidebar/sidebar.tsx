@@ -76,7 +76,7 @@ const Sidebar = () => {
             className={style.collapse}
           >
             <List component="div" disablePadding>
-              <ListItemButton sx={{ pl: 4 }}>
+              <ListItemButton sx={{ pl: 4 }} onClick={() => navigateTo('/my-data')}>
                 <ListItemIcon>
                   <FingerprintIcon className={style.icon} />
                 </ListItemIcon>
