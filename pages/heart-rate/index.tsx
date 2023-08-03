@@ -10,11 +10,10 @@ const HeartRate = () => {
         <title>Medi | Heart Rate</title>
       </Head>
       <main>
-        <DashboardLayout>
-          <h1>Heart Rate</h1>
-          <br />
+        <DashboardLayout 
+          title="Heart Rate"
+        >
           <p>Using the power of AI, we can get your heart rate with a 15 second video of your forehead.</p>
-          <br />
           <input type="file" />
           <LoadingButton
             variant="outlined"

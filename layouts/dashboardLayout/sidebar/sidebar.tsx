@@ -11,6 +11,7 @@ import ExpandMore from '@mui/icons-material/ExpandMore';
 import Collapse from '@mui/material/Collapse';
 import LockResetIcon from '@mui/icons-material/LockReset';
 import { useRouter } from "next/router";
+import AddBoxIcon from '@mui/icons-material/AddBox';
 
 const Sidebar = () => {
   const [open, setOpen] = useState<boolean>(false);
@@ -98,9 +99,22 @@ const Sidebar = () => {
               </ListItemButton>
             </List>
           </Collapse>
-        </List>
 
-        
+          <ListItemButton 
+            onClick={() => navigateTo('/medi-plus')} 
+          >
+            <ListItemIcon>
+              <AddBoxIcon className={style.icon} />
+            </ListItemIcon>
+            <ListItemText>
+              <p 
+                className={style.text}
+              >
+                Medi+
+              </p>
+            </ListItemText>
+          </ListItemButton>
+        </List>
       </div>
     </div>
    );

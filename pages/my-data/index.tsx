@@ -88,8 +88,7 @@ const MyData = () => {
           <title>Medi | My Data</title>
         </Head>
         <div>
-          <DashboardLayout>
-            <h1>My Data</h1>
+          <DashboardLayout title='My Data'>
             <div className={style.dataContainer}>
               <div className={style.line}>
                 <TextField

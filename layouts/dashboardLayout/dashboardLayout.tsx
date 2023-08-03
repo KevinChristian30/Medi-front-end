@@ -4,11 +4,12 @@ import Navbar from "./navbar/navbar";
 import Sidebar from "./sidebar/sidebar";
 
 interface Props {
+  title?: string;
   children: ReactNode;
 }
 
 const DashboardLayout = (props: Props) => {
-  const { children } = props;
+  const { children, title } = props;
 
   return ( 
     <div className={style.dashboardLayout}>
@@ -16,6 +17,10 @@ const DashboardLayout = (props: Props) => {
       <div className={style.container}>
         <Navbar />
         <div className={style.content}>
+          {
+            title && 
+            <h1 className={style.title}>{title}</h1>
+          }
           {children}
         </div>
       </div>

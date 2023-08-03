@@ -11,8 +11,9 @@ const Dashboard = () => {
           <title>Medi | Dashboard</title>
         </Head>
         <main>
-          <DashboardLayout>
-            <h1>Dashboard</h1>
+          <DashboardLayout
+            title="Dashboard"
+          >
           </DashboardLayout>
         </main>
       </Authorized>

@@ -1,0 +1,21 @@
+.mediplusCard {
+  padding: 16px;
+  border: 1px solid var(--primary);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;  
+}
+
+.title {
+  font-weight: 700;
+}
+
+.description {
+  font-weight: 500;
+}
+
+.cardContent {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
