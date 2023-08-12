@@ -9,7 +9,8 @@ const MediPlus = () => {
     {
       title: 'Brain Tumor Classifier',
       description: 'Classifies wether an MRI/CT scan can lead to cancer.',
-      image: 'mri.jpg'
+      image: 'mri.jpg',
+      url: '/medi-plus/brain-tumor-classifier'
     }
   ];
 
@@ -29,7 +30,7 @@ const MediPlus = () => {
           }
         </div>
         <Link href={'/dashboard'} className={style.link}>
-          Go Back
+          Back to Medi
         </Link>
       </div>
     </>

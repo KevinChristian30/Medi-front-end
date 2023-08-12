@@ -5,17 +5,20 @@ import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
-import Button from '@mui/material/Button';
 import { CardActionArea } from '@mui/material';
+import { useRouter } from 'next/router';
 
 export interface IMediplusProps {
   title: string;
   description: string;
   image: string;
+  url: string;
 }
 
 const MediplusCard = (props: IMediplusProps) => {
-  const { title, description, image } = props;
+  const { title, description, image, url } = props;
+
+  const router = useRouter();
 
   return (
     <Card 
@@ -23,7 +26,7 @@ const MediplusCard = (props: IMediplusProps) => {
         width: 280 ,
       }}
     >
-      <CardActionArea>
+      <CardActionArea onClick={() => router.push(url)}>
         <CardMedia
           component="img"
           alt={title}
