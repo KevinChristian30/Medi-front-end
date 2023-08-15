@@ -37,7 +37,9 @@ const BrainTumorClassifier = () => {
     const response: Response<string> = await useRequest({
       url: `${backendURL}/medi-plus/brain-tumor-classifier`,
       method: 'POST',
-      data: formValues
+      data: {
+        file: formValues.image
+      }
     });
     
     console.log(response);
