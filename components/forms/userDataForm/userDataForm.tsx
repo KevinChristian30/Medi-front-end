@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Error from '../../../types/error'
 import style from './userDataForm.module.css'
 import TextField from '@mui/material/TextField';
@@ -11,6 +11,11 @@ import MenuItem from '@mui/material/MenuItem';
 import UserDataController from '../../../controllers/userController';
 import Response from '../../../models/utility/Response';
 import UserDataDTO from '../../../DTO/userDataDTO';
+import { GetServerSideProps } from 'next';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from '../../../firebase/firebaseConfig';
+import LoadingScreen from '../../loading/loadingScreen';
+import { User } from 'firebase/auth';
 
 interface FormValues {
   firstName: string;
@@ -30,6 +35,10 @@ interface FormErrors {
   dateOfBirth: Error;
 }
 
+export interface UserDataFormProps {
+  initialFormValues: FormValues;
+}
+
 const Genders = [
   {
     value: '-',
@@ -45,7 +54,13 @@ const Genders = [
   }
 ];
 
-const UserDataForm = () => {
+const UserDataForm = (props : UserDataFormProps) => {
+  const { initialFormValues } = props;
+
+  const [user, loading, error] = useAuthState(auth);
+
+  if (loading) return <LoadingScreen />;
+
   const [formValues, setFormValues] = useState<FormValues>({
     firstName: '',
     lastName: '',
@@ -206,17 +221,23 @@ const UserDataForm = () => {
     e.preventDefault();
 
     if (!isFormValid()) return;
+    if (!user) {
+      // Todo: Toast Something Went Wrong
+      return;
+    }
 
     const userDataController = new UserDataController();
 
     const data : UserDataDTO = {
       ...formValues, 
+      uid: user.uid,
       weight: Number(formValues.weight),
       height: Number(formValues.height)
     };
     const response : Response<string> = await userDataController.insert(data);
     
     console.log(response);
+    // Todo: Handle Error
   }
 
   return (

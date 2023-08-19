@@ -33,6 +33,14 @@ class UserDataController extends Controller {
 
     return response;
   }
+
+  get = async () : Promise<Response<UserDataDTO>> => {
+    let response : Response<UserDataDTO> = new Response<UserDataDTO>();
+
+    // ToDo: Fetch Data and Return as Response
+
+    return response;
+  }
 }
 
 export default UserDataController;

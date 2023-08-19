@@ -2,9 +2,13 @@ import React from 'react'
 import Authorized from '../../components/gates/Authorized'
 import Head from 'next/head'
 import DashboardLayout from '../../layouts/dashboardLayout/dashboardLayout'
-import UserDataForm from '../../components/forms/userDataForm/userDataForm';
+import UserDataForm, { UserDataFormProps } from '../../components/forms/userDataForm/userDataForm';
+import { GetServerSideProps } from 'next';
+import { auth } from '../../firebase/firebaseConfig';
 
-const MyData = () => {
+const MyData = (props: UserDataFormProps) => {
+  const { initialFormValues } = props;
+
   return (
     <>
       <Authorized>
@@ -13,12 +17,23 @@ const MyData = () => {
         </Head>
         <div>
           <DashboardLayout title='My Data'>
-            <UserDataForm />
+            <UserDataForm initialFormValues={initialFormValues} />
           </DashboardLayout>
         </div>
       </Authorized>
     </>
   )
 }
+
+export const getServerSideProps : GetServerSideProps = async () => {
+  // Todo: Get Initial Form Values with Controller
+  // const userData = ;
+
+  return {
+    props: {
+    }
+  }
+}
+
 
 export default MyData

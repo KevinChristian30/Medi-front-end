@@ -1,4 +1,5 @@
 type UserDataDTO = {
+  uid: string;
   firstName: string;
   lastName: string;
   weight: number;
