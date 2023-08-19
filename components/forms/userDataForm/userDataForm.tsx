@@ -8,6 +8,9 @@ import { LoadingButton } from '@mui/lab';
 import SaveIcon from '@mui/icons-material/Save';
 import InputAdornment from '@mui/material/InputAdornment';
 import MenuItem from '@mui/material/MenuItem';
+import UserDataController from '../../../controllers/userController';
+import Response from '../../../models/utility/Response';
+import UserDataDTO from '../../../DTO/userDataDTO';
 
 interface FormValues {
   firstName: string;
@@ -204,7 +207,16 @@ const UserDataForm = () => {
 
     if (!isFormValid()) return;
 
-    // ToDo: Submit the Form
+    const userDataController = new UserDataController();
+
+    const data : UserDataDTO = {
+      ...formValues, 
+      weight: Number(formValues.weight),
+      height: Number(formValues.height)
+    };
+    const response : Response<string> = await userDataController.insert(data);
+    
+    console.log(response);
   }
 
   return (

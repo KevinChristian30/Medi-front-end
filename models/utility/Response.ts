@@ -1,3 +1,5 @@
+import Error from "../utility/Error";
+
 class Response<T> {
   error?: Error;
   payload?: T;
