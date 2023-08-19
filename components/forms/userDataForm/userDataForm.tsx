@@ -113,7 +113,7 @@ const UserDataForm = () => {
 
       localFormErrors.firstName = {
         isError: true,
-        message: 'First name\'s length must be between 1 and 30 characters long'
+        message: 'First name\'s length must be between 1 and 30 characters long.'
       };
       return false;
     }
@@ -123,7 +123,7 @@ const UserDataForm = () => {
 
       localFormErrors.lastName = {
         isError: true,
-        message: 'Last name\'s length exceeds 30 characters'
+        message: 'Last name\'s length exceeds 30 characters.'
       };
 
       return false;
@@ -134,7 +134,7 @@ const UserDataForm = () => {
       
       localFormErrors.weight = {
         isError: true,
-        message: 'Weight must be greater than 0'
+        message: 'Weight must be greater than 0.'
       };
 
       return false;
@@ -145,7 +145,7 @@ const UserDataForm = () => {
       
       localFormErrors.height = {
         isError: true,
-        message: 'Height must be greater than 0'
+        message: 'Height must be greater than 0.'
       };
 
       return false;
@@ -156,16 +156,30 @@ const UserDataForm = () => {
 
       localFormErrors.gender = {
         isError: true,
-        message: 'You must pick a gender'
+        message: 'You must pick a gender.'
       };
 
       return false;
     }
 
     const validateDateOfBirth = () : boolean => {
-      // ToDo: Validate Date of Birth
-      
-      return false;
+      const dateOfBirth : Date = new Date(formValues.dateOfBirth);
+      const today : Date = new Date();
+
+      if (
+        dateOfBirth.getDate() === today.getDate() &&
+        dateOfBirth.getMonth() === today.getMonth() &&
+        dateOfBirth.getFullYear() === today.getFullYear()
+      ) {
+        localFormErrors.dateOfBirth = {
+          isError: true,
+          message: 'Date of birth can\'t be today.'
+        };
+
+        return false;
+      }
+
+      return true;
     }
 
     setFormErrors(localFormErrors);
@@ -181,7 +195,8 @@ const UserDataForm = () => {
            isValidLastName &&
            isValidWeight &&
            isValidHeight &&
-           isValidGender;
+           isValidGender &&
+           isValidDateOfBirth;
   }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
