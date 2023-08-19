@@ -1,7 +1,7 @@
 import { List, ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
 import Logo from "../../../components/logo/logo";
 import style from "./sidebar.module.css";
-import MonitorHeartIcon from '@mui/icons-material/MonitorHeart';
+import BedtimeIcon from '@mui/icons-material/Bedtime';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import FingerprintIcon from '@mui/icons-material/Fingerprint';
 import PersonIcon from '@mui/icons-material/Person';
@@ -44,13 +44,13 @@ const Sidebar = () => {
             </ListItemText>
           </ListItemButton>
           
-          <ListItemButton onClick={() => navigateTo('/heart-rate')}>
+          <ListItemButton onClick={() => navigateTo('/sleep-analysis')}>
             <ListItemIcon>
-              <MonitorHeartIcon className={style.icon} />
+              <BedtimeIcon className={style.icon} />
             </ListItemIcon>
             <ListItemText>
               <p className={style.text}>
-                Heart Rate
+                Sleep Analysis
               </p>
             </ListItemText>
           </ListItemButton>

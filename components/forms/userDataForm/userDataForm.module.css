@@ -1,0 +1,10 @@
+.dataContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.dataContainer .line {
+  display: flex;
+  gap: 16px;
+}

@@ -1,25 +1,19 @@
 import Head from "next/head";
 import Authorized from "../../components/gates/Authorized";
 import DashboardLayout from "../../layouts/dashboardLayout/dashboardLayout";
-import { LoadingButton } from "@mui/lab";
+import SleepAnalysisForm from "../../components/forms/sleepAnalysisForm/sleepAnalysisForm";
 
 const HeartRate = () => {
   return (
     <Authorized>
       <Head>
-        <title>Medi | Heart Rate</title>
+        <title>Medi | Sleep Analysis</title>
       </Head>
       <main>
         <DashboardLayout 
-          title="Heart Rate"
+          title="Sleep Analysis"
         >
-          <p>Using the power of AI, we can get your heart rate with a 15 second video of your forehead.</p>
-          <input type="file" />
-          <LoadingButton
-            variant="outlined"
-          >
-            Submit
-          </LoadingButton>
+          <SleepAnalysisForm />          
         </DashboardLayout>
       </main>
     </Authorized>
