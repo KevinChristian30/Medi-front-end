@@ -1,14 +1,16 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Authorized from '../../components/gates/Authorized'
 import Head from 'next/head'
 import DashboardLayout from '../../layouts/dashboardLayout/dashboardLayout'
-import UserDataForm, { UserDataFormProps } from '../../components/forms/userDataForm/userDataForm';
-import { GetServerSideProps } from 'next';
+import UserDataForm, { FormValues } from '../../components/forms/userDataForm/userDataForm';
 import { auth } from '../../firebase/firebaseConfig';
+import Response from '../../models/utility/Response';
+import UserDataDTO from '../../DTO/userDataDTO';
+import UserDataController from '../../controllers/userController';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import LoadingScreen from '../../components/loading/loadingScreen';
 
-const MyData = (props: UserDataFormProps) => {
-  const { initialFormValues } = props;
-
+const MyData = () => {
   return (
     <>
       <Authorized>
@@ -17,23 +19,12 @@ const MyData = (props: UserDataFormProps) => {
         </Head>
         <div>
           <DashboardLayout title='My Data'>
-            <UserDataForm initialFormValues={initialFormValues} />
+            <UserDataForm />
           </DashboardLayout>
         </div>
       </Authorized>
     </>
   )
 }
-
-export const getServerSideProps : GetServerSideProps = async () => {
-  // Todo: Get Initial Form Values with Controller
-  // const userData = ;
-
-  return {
-    props: {
-    }
-  }
-}
-
 
 export default MyData

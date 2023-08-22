@@ -1,8 +1,7 @@
 import { CollectionReference } from "firebase/firestore";
 
 abstract class Controller {
-  _collectionName? : string;
-  _ref? : CollectionReference;
+  _collectionName : string = '';
 }
 
 export default Controller;

@@ -1,5 +1,3 @@
-"use client"
-
 import React, { useState, useEffect } from 'react'
 import Error from '../../../types/error'
 import style from './userDataForm.module.css'
@@ -11,17 +9,15 @@ import MenuItem from '@mui/material/MenuItem';
 import UserDataController from '../../../controllers/userController';
 import Response from '../../../models/utility/Response';
 import UserDataDTO from '../../../DTO/userDataDTO';
-import { GetServerSideProps } from 'next';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../../../firebase/firebaseConfig';
 import LoadingScreen from '../../loading/loadingScreen';
-import { User } from 'firebase/auth';
 
-interface FormValues {
+export interface FormValues {
   firstName: string;
   lastName: string;
-  weight?: number;
-  height?: number;
+  weight?: number | null;
+  height?: number | null;
   gender: string;
   dateOfBirth: string;
 }
@@ -33,10 +29,6 @@ interface FormErrors {
   height: Error;
   gender: Error;
   dateOfBirth: Error;
-}
-
-export interface UserDataFormProps {
-  initialFormValues: FormValues;
 }
 
 const Genders = [
@@ -54,9 +46,8 @@ const Genders = [
   }
 ];
 
-const UserDataForm = (props : UserDataFormProps) => {
-  const { initialFormValues } = props;
-
+const UserDataForm = () => {
+  const userDataController: UserDataController = new UserDataController();
   const [user, loading, error] = useAuthState(auth);
 
   if (loading) return <LoadingScreen />;
@@ -66,7 +57,7 @@ const UserDataForm = (props : UserDataFormProps) => {
     lastName: '',
     weight: undefined,
     height: undefined,
-    gender: '-',
+    gender: '',
     dateOfBirth: ''
   });
 
@@ -96,6 +87,45 @@ const UserDataForm = (props : UserDataFormProps) => {
       message: ''
     }
   });
+
+  useEffect(() => {
+    const fetch = async () => {
+      let initialFormValues: FormValues = {
+        firstName: '',
+        lastName: '',
+        weight: undefined,
+        height: undefined,
+        gender: '-',
+        dateOfBirth: ''
+      };
+
+      if (!user) {
+        setFormValues(initialFormValues);
+        return;
+      }
+
+      const response: Response<UserDataDTO> = await userDataController.findByUID(user.uid);
+      const userData = response.payload;
+
+      if (userData) {
+        initialFormValues = {
+          firstName: userData.firstName,
+          lastName: userData.lastName,
+          weight: userData.weight ,
+          height: userData.height,
+          gender: userData.gender,
+          dateOfBirth: userData.dateOfBirth
+        }
+      }
+
+      console.log(userData);
+    
+      setFormValues(initialFormValues);
+    }
+  
+    fetch();
+
+  }, [user, loading]);
 
   const isFormValid = () : boolean => {
     let localFormErrors : FormErrors = {
@@ -184,14 +214,10 @@ const UserDataForm = (props : UserDataFormProps) => {
       const dateOfBirth : Date = new Date(formValues.dateOfBirth);
       const today : Date = new Date();
 
-      if (
-        dateOfBirth.getDate() === today.getDate() &&
-        dateOfBirth.getMonth() === today.getMonth() &&
-        dateOfBirth.getFullYear() === today.getFullYear()
-      ) {
+      if (dateOfBirth.setHours(0, 0, 0, 0) >= today.setHours(0, 0, 0, 0)) {
         localFormErrors.dateOfBirth = {
           isError: true,
-          message: 'Date of birth can\'t be today.'
+          message: 'Date of birth must be in the past.'
         };
 
         return false;
@@ -234,7 +260,7 @@ const UserDataForm = (props : UserDataFormProps) => {
       weight: Number(formValues.weight),
       height: Number(formValues.height)
     };
-    const response : Response<string> = await userDataController.insert(data);
+    const response : Response<string> = await userDataController.insertOrUpdate(data);
     
     console.log(response);
     // Todo: Handle Error
@@ -271,7 +297,7 @@ const UserDataForm = (props : UserDataFormProps) => {
       <div className={style.line}>
         <TextField 
           type='number'
-          label="Weight"
+          placeholder='Weight'
           fullWidth
           value={formValues.weight}
           onChange={(e) => setFormValues({...formValues, weight: Number(e.target.value)})}
@@ -287,7 +313,7 @@ const UserDataForm = (props : UserDataFormProps) => {
         />
         <TextField 
           type='number'
-          label="Height"
+          placeholder='Height'
           fullWidth
           value={formValues.height}
           onChange={(e) => setFormValues({...formValues, height: Number(e.target.value)})}

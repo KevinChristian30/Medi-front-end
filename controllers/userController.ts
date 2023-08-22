@@ -1,28 +1,21 @@
-import { CollectionReference, addDoc, collection } from "firebase/firestore";
+import { Firestore, addDoc, collection, doc, getDoc, getDocs, query, setDoc, where } from "firebase/firestore";
 import Response from "../models/utility/Response";
 import { db } from "../firebase/firebaseConfig";
 import Controller from "./controller";
-import UserDataDTO from "../DTO/userDataDTO";
+import UserDataDTO, { mapFromObject } from "../DTO/userDataDTO";
 import Error from "../models/utility/Error";
 
 class UserDataController extends Controller {
   constructor() {
     super();
     this._collectionName = 'user-data';
-    this._ref = collection(db, this._collectionName);
   }
   
-  insert = async (userDataDTO : UserDataDTO) : Promise<Response<string>> => {
+  insertOrUpdate = async (userDataDTO : UserDataDTO) : Promise<Response<string>> => {
     let response : Response<string> = new Response<string>();
 
-    if (!this._ref) {
-      response.error = new Error('Reference not found');
-      
-      return response;
-    }
-
     try {
-      const result : any = await addDoc(this._ref, {
+      const result : any = await setDoc(doc(db,  this._collectionName, userDataDTO.uid), {
         ...userDataDTO
       });
 
@@ -34,10 +27,18 @@ class UserDataController extends Controller {
     return response;
   }
 
-  get = async () : Promise<Response<UserDataDTO>> => {
-    let response : Response<UserDataDTO> = new Response<UserDataDTO>();
+  findByUID = async (uid: string) : Promise<Response<UserDataDTO>> => {
+    let response: Response<UserDataDTO> = new Response<UserDataDTO>();
 
-    // ToDo: Fetch Data and Return as Response
+    try {
+      const docRef = doc(db, this._collectionName, uid);
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists()) response.payload = mapFromObject(docSnap.data());
+      else response.error = new Error('');
+    } catch (error) {
+      response.error = new Error('Failed Saving Data');
+    }
 
     return response;
   }
