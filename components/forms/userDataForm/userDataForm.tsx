@@ -211,19 +211,30 @@ const UserDataForm = () => {
     }
 
     const validateDateOfBirth = () : boolean => {
-      const dateOfBirth : Date = new Date(formValues.dateOfBirth);
-      const today : Date = new Date();
+      try {
+        const dateOfBirth : Date = new Date(formValues.dateOfBirth);
+        const today : Date = new Date();
 
-      if (dateOfBirth.setHours(0, 0, 0, 0) >= today.setHours(0, 0, 0, 0)) {
-        localFormErrors.dateOfBirth = {
-          isError: true,
-          message: 'Date of birth must be in the past.'
-        };
+        if(formValues.dateOfBirth === '') {
+          localFormErrors.dateOfBirth = {
+            isError: true,
+            message: 'Date of birth must be filled.'
+          };
+        }
 
+        if (dateOfBirth.setHours(0, 0, 0, 0) >= today.setHours(0, 0, 0, 0)) {
+          localFormErrors.dateOfBirth = {
+            isError: true,
+            message: 'Date of birth must be in the past.'
+          };
+
+          return false;
+        }
+
+        return true;
+      } catch (error) {
         return false;
       }
-
-      return true;
     }
 
     setFormErrors(localFormErrors);
