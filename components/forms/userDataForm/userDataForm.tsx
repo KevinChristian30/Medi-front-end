@@ -49,6 +49,7 @@ const Genders = [
 const UserDataForm = () => {
   const userDataController: UserDataController = new UserDataController();
   const [user, loading, error] = useAuthState(auth);
+  const [formLoading, setFormLoading] = useState<boolean>(false);
 
   if (loading) return <LoadingScreen />;
 
@@ -271,9 +272,11 @@ const UserDataForm = () => {
       weight: Number(formValues.weight),
       height: Number(formValues.height)
     };
+
+    setFormLoading(true);
     const response : Response<string> = await userDataController.insertOrUpdate(data);
+    setFormLoading(false);
     
-    console.log(response);
     // Todo: Handle Error
   }
 
@@ -389,7 +392,7 @@ const UserDataForm = () => {
         type="submit"
         variant="contained" 
         fullWidth
-        loading={false}
+        loading={formLoading}
         startIcon={<SaveIcon></SaveIcon>}
       >
         Save
