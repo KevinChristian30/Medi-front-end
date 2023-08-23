@@ -15,7 +15,7 @@ class UserDataController extends Controller {
     let response : Response<string> = new Response<string>();
 
     try {
-      const result : any = await setDoc(doc(db,  this._collectionName, userDataDTO.uid), {
+      const result: any = await setDoc(doc(db,  this._collectionName, userDataDTO.uid), {
         ...userDataDTO
       });
 

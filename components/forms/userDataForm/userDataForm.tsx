@@ -12,6 +12,7 @@ import UserDataDTO from '../../../DTO/userDataDTO';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../../../firebase/firebaseConfig';
 import LoadingScreen from '../../loading/loadingScreen';
+import Toast from '../../utilities/toast/toast';
 
 export interface FormValues {
   firstName: string;
@@ -50,6 +51,8 @@ const UserDataForm = () => {
   const userDataController: UserDataController = new UserDataController();
   const [user, loading, error] = useAuthState(auth);
   const [formLoading, setFormLoading] = useState<boolean>(false);
+  const [successSnackbarOpen, setSuccessSnackbarOpen] = useState<boolean>(false);
+  const [errorSnackbarOpen, setErrorSnackbarOpen] = useState<boolean>(false);
 
   if (loading) return <LoadingScreen />;
 
@@ -119,8 +122,6 @@ const UserDataForm = () => {
         }
       }
 
-      console.log(userData);
-    
       setFormValues(initialFormValues);
     }
   
@@ -260,7 +261,7 @@ const UserDataForm = () => {
 
     if (!isFormValid()) return;
     if (!user) {
-      // Todo: Toast Something Went Wrong
+      setErrorSnackbarOpen(true);
       return;
     }
 
@@ -276,8 +277,13 @@ const UserDataForm = () => {
     setFormLoading(true);
     const response : Response<string> = await userDataController.insertOrUpdate(data);
     setFormLoading(false);
-    
-    // Todo: Handle Error
+
+    if (response.error) {
+      setErrorSnackbarOpen(true);
+      return;
+    }
+
+    setSuccessSnackbarOpen(true);
   }
 
   return (
@@ -397,6 +403,17 @@ const UserDataForm = () => {
       >
         Save
       </LoadingButton>
+      <Toast 
+        isOpen={successSnackbarOpen}
+        closeToast={() => setSuccessSnackbarOpen(false)}
+        message="Data Saved Sucessfully"
+      />
+      <Toast 
+        isOpen={errorSnackbarOpen}
+        closeToast={() => setErrorSnackbarOpen(false)}
+        message="Something went wrong, please try again later"
+        severity="error"
+      />
     </form>
   )
 }
