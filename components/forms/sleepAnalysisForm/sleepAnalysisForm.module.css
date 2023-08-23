@@ -1,0 +1,30 @@
+.sleepAnalysisForm {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
+.dataContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.dataContainer .line {
+  display: flex;
+  gap: 16px;
+}
+
+.userData {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.navButton {
+  width: 100%;
+}
+
+.title {
+  color: var(--primary);
+}

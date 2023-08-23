@@ -222,6 +222,8 @@ const UserDataForm = () => {
             isError: true,
             message: 'Date of birth must be filled.'
           };
+
+          return false;
         }
 
         if (dateOfBirth.setHours(0, 0, 0, 0) >= today.setHours(0, 0, 0, 0)) {
