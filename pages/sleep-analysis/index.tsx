@@ -13,6 +13,10 @@ const HeartRate = () => {
         <DashboardLayout 
           title="Sleep Analysis"
         >
+          <p>
+            Sleep Analysis is Medi's way of helping you take control of your sleep. Fill the form below and we will analyze your sleep quality.
+          </p>
+          <div style={{height: '48px'}}></div>
           <SleepAnalysisForm />          
         </DashboardLayout>
       </main>
