@@ -1,7 +1,13 @@
 import { Button, TextField } from '@mui/material';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import style from './sleepAnalysisForm.module.css'
 import Link from 'next/link';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from '../../../firebase/firebaseConfig';
+import UserDataDTO from '../../../DTO/userDataDTO';
+import UserDataController from '../../../controllers/userController';
+import Response from '../../../models/utility/Response';
+import { calculateBMI, dateToAge, toBMICategory } from '../../../utils';
 
 interface FormValues {
   gender: string;
@@ -18,16 +24,56 @@ interface FormErrors {
 }
 
 const SleepAnalysisForm = () => {
+  const userDataController: UserDataController = new UserDataController();
+
   const [formValues, setFormValues] = useState<FormValues>({
-    gender: 'Female',
-    age: 20,
-    BMICategory: 'Obese',
+    gender: '',
+    age: 0,
+    BMICategory: '',
     sleepDuration: 0,
     qualityOfSleep: 0,
     physicalActivity: 0,
     stressLevel: 1,
     bloodPressure: 0
   });
+
+  const [user, loading, error] = useAuthState(auth);
+
+  useEffect(() => {
+    const fetch = async () => {
+      let initialFormValues: FormValues = {
+        gender: '',
+        age: 0,
+        BMICategory: '',
+        sleepDuration: 0,
+        qualityOfSleep: 0,
+        physicalActivity: 0,
+        stressLevel: 1,
+        bloodPressure: 0
+      };
+
+      if (!user) {
+        setFormValues(initialFormValues);
+        return;
+      }
+
+      const response: Response<UserDataDTO> = await userDataController.findByUID(user.uid);
+      const userData = response.payload;
+
+      if (userData) {
+        initialFormValues = {
+          ...initialFormValues,
+          gender: userData.gender,
+          age: dateToAge(new Date(userData.dateOfBirth)),
+          BMICategory: toBMICategory(calculateBMI(userData.weight, userData.height))
+        }
+      }
+
+      setFormValues(initialFormValues);
+    }
+  
+    fetch();
+  }, []);
 
   return (
     <div className={style.sleepAnalysisForm}>
