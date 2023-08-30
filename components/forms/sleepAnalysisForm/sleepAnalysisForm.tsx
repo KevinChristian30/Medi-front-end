@@ -1,4 +1,4 @@
-import { Button, InputAdornment, TextField } from '@mui/material';
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, InputAdornment, Modal, Slider, TextField } from '@mui/material';
 import React, { useEffect, useState } from 'react'
 import style from './sleepAnalysisForm.module.css'
 import Link from 'next/link';
@@ -9,15 +9,16 @@ import UserDataController from '../../../controllers/userController';
 import Response from '../../../models/utility/Response';
 import { calculateBMI, dateToAge, toBMICategory } from '../../../utils';
 import Error from '../../../types/error';
+import { useRouter } from 'next/router';
 
 interface FormValues {
   gender: string;
   age: number;
   BMICategory: string;
   sleepDuration?: string;
-  qualityOfSleep?: string;
+  qualityOfSleep?: number;
   physicalActivity?: number;
-  stressLevel?: string;
+  stressLevel?: number;
   upperBloodPressure?: string;
   lowerBloodPressure?: string;
 }
@@ -33,15 +34,16 @@ interface FormErrors {
 
 const SleepAnalysisForm = () => {
   const userDataController: UserDataController = new UserDataController();
+  const router = useRouter();
 
   const [formValues, setFormValues] = useState<FormValues>({
     gender: '',
     age: 0,
     BMICategory: '',
     sleepDuration: '',
-    qualityOfSleep: '',
+    qualityOfSleep: 5,
     physicalActivity: 0,
-    stressLevel: '',
+    stressLevel: 5,
     lowerBloodPressure: '',
     upperBloodPressure: '',
   });
@@ -71,6 +73,7 @@ const SleepAnalysisForm = () => {
       message: ''
     },
   });
+  const [open, setOpen] = useState<boolean>(false);
 
   const [user, loading, error] = useAuthState(auth);
 
@@ -81,9 +84,9 @@ const SleepAnalysisForm = () => {
         age: 0,
         BMICategory: '',
         sleepDuration: '',
-        qualityOfSleep: '',
+        qualityOfSleep: 5,
         physicalActivity: 0,
-        stressLevel: '',
+        stressLevel: 5,
         lowerBloodPressure: '',
         upperBloodPressure: '',
       };
@@ -103,6 +106,8 @@ const SleepAnalysisForm = () => {
           age: dateToAge(new Date(userData.dateOfBirth)),
           BMICategory: toBMICategory(calculateBMI(userData.weight, userData.height))
         }
+      } else {
+        setOpen(true);
       }
 
       setFormValues(initialFormValues);
@@ -227,13 +232,30 @@ const SleepAnalysisForm = () => {
 
     if (!isFormValid()) return;
 
-    console.log(formValues);
-
     // Todo: Send Data to Backend
   }
 
   return (
     <div className={style.sleepAnalysisForm}>
+      <Dialog
+        open={open}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          You haven't filled your data
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Sleep Analysis needs your data to be accurate, fill your data in my-data page before continuing.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => {router.push('/my-data')}} autoFocus>
+            Okay
+          </Button>
+        </DialogActions>
+      </Dialog>
       <div className={style.userData}>
         <h3 className={style.title}>Your Data</h3>
         <div className={style.dataContainer}>
@@ -294,34 +316,30 @@ const SleepAnalysisForm = () => {
                 }}
               />
             </div>
-            <div className={style.line}>
-              <TextField 
-                type='number'
-                label='Sleep Quality'
-                placeholder='Your subjective sleep quality on a scale of 1 - 10'
-                fullWidth
+            <div>
+              <p>Subjective Quality of Sleep</p>
+              <Slider
+                aria-label="Quality of Sleep"
+                step={1}
+                marks
+                min={1}
+                max={10}
+                valueLabelDisplay='auto'
                 value={formValues.qualityOfSleep}
-                onChange={(e) => setFormValues({...formValues, qualityOfSleep: e.target.value})}
-                error={formErrors.qualityOfSleep.isError}
-                helperText={formErrors.qualityOfSleep.message}
-                size='small'
-                sx={{
-                  height: '56px'
-                }}
+                onChange={(_, e) => setFormValues({...formValues, qualityOfSleep: Number(e)})}
               />
-              <TextField 
-                type='number'
-                label='Stress Level'
-                placeholder='Your subjective stress level on a scale of 1 - 10'
-                fullWidth
+            </div>
+            <div>
+              <p>Subjective Stress Level</p>
+              <Slider
+                aria-label="Stress Level"
+                step={1}
+                marks
+                min={1}
+                max={10}
+                valueLabelDisplay='auto'
                 value={formValues.stressLevel}
-                onChange={(e) => setFormValues({...formValues, stressLevel: e.target.value})}
-                error={formErrors.stressLevel.isError}
-                helperText={formErrors.stressLevel.message}
-                size='small'
-                sx={{
-                  height: '56px'
-                }}
+                onChange={(_, e) => setFormValues({...formValues, stressLevel: Number(e)})}
               />
             </div>
             <div className={style.line}>
